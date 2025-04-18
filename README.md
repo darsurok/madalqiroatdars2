@@ -1,8 +1,5 @@
 # madalqiroatdars2
 
-# madalqiroat
-Madalqiroat1
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
