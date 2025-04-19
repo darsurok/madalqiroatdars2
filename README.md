@@ -188,10 +188,12 @@
       const test = tests[currentTest];
       const words = [...document.querySelectorAll('.sentence-box#sentenceArea .word')];
 
-      const isCorrect = words.length === test.words.length &&
-        words.every((word, index) =>
-          parseInt(word.dataset.correct) === index + 1
-        );
+      const reversedWords = words.reverse(); // так как они идут справа налево
+       const isCorrect = reversedWords.length === test.words.length &&
+        reversedWords.every((word, index) =>
+       parseInt(word.dataset.correct) === index + 1
+      );
+
 
       const result = document.getElementById('result');
       result.textContent = isCorrect ?
