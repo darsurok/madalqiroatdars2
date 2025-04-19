@@ -33,6 +33,14 @@
       padding: 15px;
       border-radius: 10px;
     }
+    .translation-box {
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 18px;
+      color: #555;
+      background: #f9f9f9;
+      border-left: 4px solid #2196F3;
+    }
     #answerArea {
       display: flex;
       flex-wrap: wrap;
@@ -132,6 +140,7 @@
 
       const testHTML = `
         <div class="test-container active">
+          <div class="translation-box">${test.translation}</div>
           <div class="sentence-box" id="answerArea"></div>
           <div class="sentence-box" id="sentenceArea"></div>
           <div class="words-box" id="wordsBox">
