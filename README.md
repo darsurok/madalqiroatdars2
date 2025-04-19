@@ -1,5 +1,3 @@
-# madalqiroatdars2
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,85 +9,17 @@
     body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 10px; }
     .test-container { max-width: 600px; margin: 0 auto 30px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: none; }
     .test-container.active { display: block; }
-    .words-box {
-      background: #fff;
-      border: 2px dashed #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-      min-height: 80px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      flex-direction: row-reverse;
-    }
-    .sentence-box {
-      background: #e3f2fd;
-      border: 2px solid #2196F3;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      min-height: 80px;
-      padding: 15px;
-      border-radius: 10px;
-    }
-    .translation-box {
-      margin-bottom: 15px;
-      padding: 10px;
-      font-size: 18px;
-      color: #555;
-      background: #f9f9f9;
-      border-left: 4px solid #2196F3;
-    }
-    #answerArea {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      flex-direction: row;
-      direction: ltr;
-      text-align: left;
-    }
-    #sentenceArea {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      flex-direction: row-reverse;
-      direction: rtl;
-      text-align: right;
-    }
-    .word {
-  background: #4CAF50;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 15px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s;
-  font-size: 20px;
-}
+    .words-box, .sentence-box { background: #fff; border: 2px dashed #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; min-height: 80px; display: flex; flex-wrap: wrap; gap: 8px; flex-direction: row-reverse; }
+    .sentence-box { background: #e3f2fd; border: 2px solid #2196F3; }
+    .word { background: #4CAF50; color: white; padding: 8px 12px; border-radius: 15px; cursor: pointer; user-select: none; transition: all 0.2s; font-size: 20px; }
     .readonly-word { background: #888 !important; cursor: default !important; }
-    .check-btn {
-      background: #2196F3;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      margin: 5px 0;
-    }
+    .check-btn { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin: 5px 0; }
     .next-btn { background: #9C27B0; display: none; }
     .result { padding: 10px; font-weight: bold; text-align: center; }
     .correct { color: #2ecc71; }
     .incorrect { color: #e74c3c; }
     .progress { text-align: center; margin-bottom: 20px; font-size: 18px; }
-    .name-input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-    }
+    .name-input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
     .telegram-btn {
       display: inline-block;
       background: #2196F3;
@@ -102,6 +32,12 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
+    /* Исправление: текст в первом окошке (английский) слева направо */
+    #answerArea {
+      direction: ltr;
+      flex-direction: row !important;
+    }
   </style>
 </head>
 <body>
@@ -112,15 +48,63 @@
     const tests = [
       {
         words: [
-          { text: "مَنْ", correct: 1 },
-          { text: "هَذَا؟", correct: 2 },
-          { text: "مُعَلِّمٌ", correct: 3 },
-          { text: "مَنْ", correct: 4 },
-          { text: "هَؤُلاَءِ؟", correct: 5 },
-          { text: "مُعَلِّمُونَ", correct: 6 }
-        ],
-        correctSentence: "مَنْ هَذَا؟ - مُعَلِّمٌ. مَنْ هَؤُلاَءِ؟ - مُعَلِّمُونَ.",
-        translation: "Кто это? - Учитель. Кто это? - Учителя."
+      { text: "هُوَ", correct: 1 },
+      { text: "كَبِيرٌ", correct: 2 },
+      { text: "هُمْ", correct: 3 },
+      { text: "كِبَارٌ", correct: 4 }
+    ],
+    correctSentence: "هُوَ كَبِيرٌ. هُمْ كِبَارٌ.",
+    translation: "Он большой. Они большие."
+  },
+  {
+    words: [
+      { text: "أَنْتَ", correct: 1 },
+      { text: "صَغِيرٌ", correct: 2 },
+      { text: "اَنْتُمْ", correct: 3 },
+      { text: "صِغَارٌ", correct: 4 }
+    ],
+    correctSentence: "أَنْتَ صَغِيرٌ. اَنْتُمْ صِغَارٌ.",
+    translation: "Ты маленький. Вы маленькие."
+  },
+  {
+    words: [
+      { text: "اَنَا", correct: 1 },
+      { text: "كَبِيرٌ", correct: 2 },
+      { text: "نَحْنُ", correct: 3 },
+      { text: "كِبَارٌ", correct: 4 }
+    ],
+    correctSentence: "اَنَا كَبِيرٌ. نَحْنُ كِبَارٌ.",
+    translation: "Я большой. Мы большие."
+  },
+  {
+    words: [
+      { text: "هُوَ", correct: 1 },
+      { text: "صَغِيرٌ", correct: 2 },
+      { text: "هُمْ", correct: 3 },
+      { text: "صِغَارٌ", correct: 4 }
+    ],
+    correctSentence: "هُوَ صَغِيرٌ. هُمْ صِغَارٌ.",
+    translation: "Он маленький. Они маленькие."
+  },
+  {
+    words: [
+      { text: "اَنْتَ", correct: 1 },
+      { text: "كَبِيرٌ", correct: 2 },
+      { text: "اَنْتُمْ", correct: 3 },
+      { text: "كِبَارٌ", correct: 4 }
+    ],
+    correctSentence: "اَنْتَ كَبِيرٌ.  اَنْتُمْ كِبَارٌ.",
+    translation: "Ты большой. Вы большие."
+  },
+  {
+    words: [
+      { text: "اَنَا", correct: 1 },
+      { text: "صَغِيرٌ", correct: 2 },
+      { text: "نَحْنُ", correct: 3 },
+      { text: "صِغَارٌ", correct: 4 }
+    ],
+    correctSentence: "اَنَا صَغِيرٌ. نَحْنُ صِغَارٌ.",
+    translation: "Я маленький. Мы маленькие."
       }
     ];
 
@@ -138,21 +122,19 @@
 
       const test = tests[index];
 
-      const testHTML = `
-        <div class="test-container active">
-          <div class="translation-box">${test.translation}</div>
+      const testHTML =
+        `<div class="test-container active">
           <div class="sentence-box" id="answerArea"></div>
           <div class="sentence-box" id="sentenceArea"></div>
           <div class="words-box" id="wordsBox">
-            ${test.words.map(word => `
-              <div class="word" data-correct="${word.correct}">${word.text}</div>
-            `).join('')}
+            ${test.words.map(word =>
+              `<div class="word" data-correct="${word.correct}">${word.text}</div>`
+            ).join('')}
           </div>
           <button class="check-btn" onclick="checkTest()">Проверить</button>
           <button class="check-btn next-btn" onclick="nextTest()">Следующий тест →</button>
           <div class="result" id="result"></div>
-        </div>
-      `;
+        </div>`;
       container.innerHTML = testHTML;
 
       const answerArea = document.getElementById('answerArea');
@@ -188,12 +170,10 @@
       const test = tests[currentTest];
       const words = [...document.querySelectorAll('.sentence-box#sentenceArea .word')];
 
-      const reversedWords = words.reverse(); // так как они идут справа налево
-       const isCorrect = reversedWords.length === test.words.length &&
-        reversedWords.every((word, index) =>
-       parseInt(word.dataset.correct) === index + 1
-      );
-
+      const isCorrect = words.length === test.words.length &&
+        words.every((word, index) =>
+          parseInt(word.dataset.correct) === index + 1
+        );
 
       const result = document.getElementById('result');
       result.textContent = isCorrect ?
@@ -213,13 +193,12 @@
         createTest(currentTest);
         initWordClick();
       } else {
-        document.getElementById('testsContainer').innerHTML = `
-          <div class="test-container active">
+        document.getElementById('testsContainer').innerHTML =
+          `<div class="test-container active">
             <div class="result correct">Все тесты пройдены! Молодец!</div>
             <input class="name-input" id="username" placeholder="Введите ваше имя">
             <button class="check-btn" onclick="sendToMessenger()">Отправить в мессенджер</button>
-          </div>
-        `;
+          </div>`;
         document.querySelector('.progress').style.display = 'none';
       }
     }
@@ -246,7 +225,7 @@
           'Content-Type': 'application/json'
         }
       }).then(() => {
-        document.getElementById('testsContainer').innerHTML = 
+        document.getElementById('testsContainer').innerHTML =
           `<div class="test-container active">
             <div class="result correct">Данные успешно отправлены!</div>
             <a href="https://sites.google.com/view/mabdalqiroat" class="telegram-btn">Начать заново</a>
