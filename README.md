@@ -34,6 +34,19 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
+    #answerArea {
+  direction: ltr;
+  text-align: left;
+  flex-direction: row;
+}
+
+#sentenceArea {
+  direction: rtl;
+  text-align: right;
+  flex-direction: row-reverse;
+}
+
   </style>
 </head>
 <body>
