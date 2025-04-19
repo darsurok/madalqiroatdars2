@@ -66,8 +66,6 @@
   user-select: none;
   transition: all 0.2s;
   font-size: 20px;
-  direction: rtl;
-  unicode-bidi: bidi-override;
 }
     .readonly-word { background: #888 !important; cursor: default !important; }
     .check-btn {
