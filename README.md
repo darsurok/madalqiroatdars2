@@ -11,17 +11,77 @@
     body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 10px; }
     .test-container { max-width: 600px; margin: 0 auto 30px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: none; }
     .test-container.active { display: block; }
-    .words-box, .sentence-box { background: #fff; border: 2px dashed #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; min-height: 80px; display: flex; flex-wrap: wrap; gap: 8px; flex-direction: row-reverse; }
-    .sentence-box { background: #e3f2fd; border: 2px solid #2196F3; }
-    .word { background: #4CAF50; color: white; padding: 8px 12px; border-radius: 15px; cursor: pointer; user-select: none; transition: all 0.2s; font-size: 20px; }
+    .words-box {
+      background: #fff;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      min-height: 80px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex-direction: row-reverse;
+    }
+    .sentence-box {
+      background: #e3f2fd;
+      border: 2px solid #2196F3;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 80px;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    #answerArea {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex-direction: row;
+      direction: ltr;
+      text-align: left;
+    }
+    #sentenceArea {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex-direction: row-reverse;
+      direction: rtl;
+      text-align: right;
+    }
+    .word {
+      background: #4CAF50;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 15px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+      font-size: 20px;
+    }
     .readonly-word { background: #888 !important; cursor: default !important; }
-    .check-btn { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin: 5px 0; }
+    .check-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 5px 0;
+    }
     .next-btn { background: #9C27B0; display: none; }
     .result { padding: 10px; font-weight: bold; text-align: center; }
     .correct { color: #2ecc71; }
     .incorrect { color: #e74c3c; }
     .progress { text-align: center; margin-bottom: 20px; font-size: 18px; }
-    .name-input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
+    .name-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
     .telegram-btn {
       display: inline-block;
       background: #2196F3;
@@ -34,19 +94,6 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
-    #answerArea {
-  direction: ltr;
-  text-align: left;
-  flex-direction: row;
-}
-
-#sentenceArea {
-  direction: rtl;
-  text-align: right;
-  flex-direction: row-reverse;
-}
-
   </style>
 </head>
 <body>
@@ -55,66 +102,18 @@
 
   <script>
     const tests = [
-    {
-    words: [
-      { text: "هِىَ", correct: 1 },
-      { text: "كَبِيرَةٌ", correct: 2 },
-      { text: "هُنَّ", correct: 3 },
-      { text: "كَبِيرَاتٌ", correct: 4 }
-    ],
-    correctSentence: "هِىَ كَبِيرَةٌ. هُنَّ كَبِيرَاتٌ.",
-    translation: "Она большая. Они большие."
-  },
-  {
-    words: [
-      { text: "اَنْتِ", correct: 1 },
-      { text: "صَغِيرَةٌ", correct: 2 },
-      { text: "اَنْتُنَّ", correct: 3 },
-      { text: "صَغِيرَاتٌ", correct: 4 }
-    ],
-    correctSentence: "اَنْتِ صَغِيرَةٌ. اَنْتُنَّ صَغِيرَاتٌ.",
-    translation: "Ты маленькая. Вы маленькие."
-  },
-  {
-    words: [
-      { text: "اَنَا", correct: 1 },
-      { text: "كَبِيرَةٌ", correct: 2 },
-      { text: "نَحْنُ", correct: 3 },
-      { text: "كَبِيرَاتٌ", correct: 4 }
-    ],
-    correctSentence: "اَنَا كَبِيرَةٌ. نَحْنُ كَبِيرَاتٌ.",
-    translation: "Я большая. Мы большие."
-  },
-  {
-    words: [
-      { text: "هِىَ", correct: 1 },
-      { text: "صَغِيرَةٌ", correct: 2 },
-      { text: "هُنَّ", correct: 3 },
-      { text: "صَغِيرَاتٌ", correct: 4 }
-    ],
-    correctSentence: "هِىَ صَغِيرَةٌ. هُنَّ صَغِيرَاتٌ.",
-    translation: "Она маленькая. Они маленькие."
-  },
-  {
-    words: [
-      { text: "اَنْتِ", correct: 1 },
-      { text: "كَبِيرَةٌ", correct: 2 },
-      { text: "اَنْتُنَّ", correct: 3 },
-      { text: "كَبِيرَاتٌ", correct: 4 }
-    ],
-    correctSentence: "اَنْتِ كَبِيرَةٌ. اَنْتُنَّ كَبِيرَاتٌ.",
-    translation: "Ты большая. Вы большие."
-  },
-  {
-    words: [
-      { text: "اَنَا", correct: 1 },
-      { text: "صَغِيرَةٌ", correct: 2 },
-      { text: "نَحْنُ", correct: 3 },
-      { text: "صَغِيرَاتٌ", correct: 4 }
-    ],
-    correctSentence: "اَنَا صَغِيرَةٌ. نَحْنُ صَغِيرَاتٌ.",
-    translation: "Я маленькая. Мы маленькие."
-  }
+      {
+        words: [
+          { text: "مَنْ", correct: 1 },
+          { text: "هَذَا؟", correct: 2 },
+          { text: "مُعَلِّمٌ", correct: 3 },
+          { text: "مَنْ", correct: 4 },
+          { text: "هَؤُلاَءِ؟", correct: 5 },
+          { text: "مُعَلِّمُونَ", correct: 6 }
+        ],
+        correctSentence: "مَنْ هَذَا؟ - مُعَلِّمٌ. مَنْ هَؤُلاَءِ؟ - مُعَلِّمُونَ.",
+        translation: "Кто это? - Учитель. Кто это? - Учителя."
+      }
     ];
 
     let currentTest = 0;
@@ -147,7 +146,6 @@
       `;
       container.innerHTML = testHTML;
 
-      // Добавление слов из перевода
       const answerArea = document.getElementById('answerArea');
       test.translation.split(" ").forEach(word => {
         const span = document.createElement('div');
@@ -216,37 +214,37 @@
     }
 
     function sendToMessenger() {
-  const name = document.getElementById('username').value.trim();
+      const name = document.getElementById('username').value.trim();
 
-  if (!name) {
-    alert("Пожалуйста, введите ваше имя перед отправкой.");
-    return;
-  }
+      if (!name) {
+        alert("Пожалуйста, введите ваше имя перед отправкой.");
+        return;
+      }
 
-  const payload = {
-    username: name,
-    text: `Пользователь прошёл тест!\nИмя: ${name}`,
-    channel: 'channel3'
-  };
+      const payload = {
+        username: name,
+        text: `Пользователь прошёл тест!\nИмя: ${name}`,
+        channel: 'channel3'
+      };
 
-  fetch('https://script.google.com/macros/s/AKfycbxKtfqb4Tx0gGeDFnTtH3yA7ZoU0N_yHz6qTW066T_r9rGHsVuuYrwbhT4gkJ2B-yXK/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify(payload),
-    headers: {
-      'Content-Type': 'application/json'
+      fetch('https://script.google.com/macros/s/AKfycbxKtfqb4Tx0gGeDFnTtH3yA7ZoU0N_yHz6qTW066T_r9rGHsVuuYrwbhT4gkJ2B-yXK/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(() => {
+        document.getElementById('testsContainer').innerHTML = 
+          `<div class="test-container active">
+            <div class="result correct">Данные успешно отправлены!</div>
+            <a href="https://sites.google.com/view/mabdalqiroat" class="telegram-btn">Начать заново</a>
+          </div>`;
+      }).catch(error => {
+        console.error("Ошибка при отправке:", error);
+        alert("Ошибка при отправке: " + error);
+      });
     }
-  }).then(() => {
-    document.getElementById('testsContainer').innerHTML = 
-      `<div class="test-container active">
-        <div class="result correct">Данные успешно отправлены!</div>
-        <a href="https://sites.google.com/view/mabdalqiroat" class="telegram-btn">Начать заново</a>
-      </div>`;
-  }).catch(error => {
-    console.error("Ошибка при отправке:", error);
-    alert("Ошибка при отправке: " + error);
-  });
-}
 
     window.onload = init;
   </script>
